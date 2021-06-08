@@ -44,7 +44,83 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+    ChatBot::ChatBot(const ChatBot &source) //copy constructor
+    {
+        std::cout << "ChatBot Copy Constructor" << std::endl;
 
+        // Copy source data to new instance
+        _chatLogic = source._chatLogic;
+        _rootNode = source._rootNode;
+      	_currentNode = source._currentNode;
+
+        // Perform a deep copy of image data 
+        if (_image != nullptr)
+            delete _image;
+
+         _image =  new wxBitmap();
+         _image = source._image;
+
+    }
+    ChatBot::ChatBot(ChatBot &&source) //move constructor
+    {
+        std::cout << "ChatBot Move Constructor" << std::endl;
+      
+         //Copy source data to new instance
+        _chatLogic = source._chatLogic;
+        _rootNode = source._rootNode;
+        _currentNode = source._currentNode;
+       	_image = source._image;
+        _chatLogic->SetChatbotHandle(this);
+        
+      	//invalidate source data
+       	source._chatLogic = nullptr;
+       	source._rootNode = nullptr;
+      	source._currentNode = nullptr;
+      	source._image = NULL;
+    }
+    ChatBot& ChatBot::operator=(const ChatBot &source) //copy assignment operator
+    {
+        std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+      
+      	if(this == &source)
+          return *this;
+      
+      	// Copy source data to new instance
+        _chatLogic = source._chatLogic;
+        _rootNode = source._rootNode;
+      	_currentNode = source._currentNode;
+
+        // Perform a deep copy of image data 
+        if (_image != nullptr)
+            delete _image;
+
+         _image =  new wxBitmap();
+         _image = source._image;
+        
+        return *this;
+    }
+    ChatBot& ChatBot::operator=(ChatBot &&source) //move assignment operator
+    {
+        std::cout << "ChatBot Move Assignment Operator" << std::endl;
+        
+         if(this == &source)
+          return *this;
+      
+        //Copy source data to new instance
+        _chatLogic = source._chatLogic;
+        _rootNode = source._rootNode;
+        _currentNode = source._currentNode;
+       	_image = source._image;
+        _chatLogic->SetChatbotHandle(this);
+        
+      	//invalidate source data
+       	source._chatLogic = nullptr;
+       	source._rootNode = nullptr;
+      	source._currentNode = nullptr;
+      	source._image = NULL;
+      
+        return *this;
+    }
 ////
 //// EOF STUDENT CODE
 
